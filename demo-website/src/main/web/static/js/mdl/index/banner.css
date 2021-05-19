@@ -1,0 +1,17 @@
+.mdl-banner {
+    position: relative;
+    padding: 30px 0;
+    background: #4caf50;
+}
+
+.mdl-banner .glide__track {
+    padding: 0 16px;
+}
+
+.mdl-banner .glide__bullets {
+    bottom: 14px;
+}
+
+.glide--carousel  {
+    position: relative;
+}

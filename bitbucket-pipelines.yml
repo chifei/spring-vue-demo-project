@@ -1,0 +1,23 @@
+image: openjdk:11
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - gradle
+        script:
+          - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+          - apt-get install -y nodejs
+          - bash ./gradlew build -x check
+
+  custom:
+    deploy:
+      - step:
+          script:
+            - curl -sL https://deb.nodesource.com/setup_10.x | bash -
+            - apt-get install -y nodejs
+            - echo "deploying demo-website"
+            - bash ./gradlew clean build distZip -Penv=prod -x check
+            - scp build/demo-website/distributions/demo-website.zip ubuntu@172.104.29.96:/opt/demo4/demo-website.zip
+            - scp deploy.sh ubuntu@172.104.29.96:/opt/demo4/deploy.sh
+            - ssh ubuntu@172.104.29.96 "bash /opt/demo4/deploy.sh"
